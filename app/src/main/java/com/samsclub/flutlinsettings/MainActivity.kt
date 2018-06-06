@@ -4,15 +4,15 @@ import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import com.samsclub.flutlinsettings.style.Style
 import com.samsclub.flutlinsettings.viewmodel.SettingsVm
 import com.samsclub.flutlinui.SettingsView
 import com.samsclub.flutlinui.base.InitParams
 import com.samsclub.flutlinui.base.Text
-import com.samsclub.flutlinui.widget.InlineEdit
-import com.samsclub.flutlinui.widget.Label
-import com.samsclub.flutlinui.widget.Check
+import com.samsclub.flutlinui.widget.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +27,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.editableText2.value = ""
 
         val container = findViewById<FrameLayout>(R.id.root)
+        val cardMargins = Style.cardMargins
 
+        Log.d("yury", "cardMargins = ${cardMargins}")
         val settingsView = SettingsView(
                 listOf(
                         Label(text = Text.from(viewModel.editableText)),
@@ -46,7 +48,23 @@ class MainActivity : AppCompatActivity() {
                         InlineEdit(
                                 text = viewModel.editableText2,
                                 hint = Text.from("Hint2")
-                        )
+                        ),
+//                        Box(
+//                                child =
+                                Card(
+                                        view = SettingsView(
+                                                listOf(
+                                                        Label(text = Text.from("Some label")),
+                                                        InlineEdit(
+                                                                text = viewModel.editableText2,
+                                                                hint = Text.from("Some other hint")
+                                                        )
+                                                )
+                                        ),
+                                        boxParams = cardMargins
+                                )
+//                                boxParams = cardMargins
+//                        )
                 )
         ).inflate(InitParams(
                 applicationContext,

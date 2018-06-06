@@ -27,7 +27,6 @@ class Label(
                     }
                 }.lparams(width = wrapContent) {
                     centerVertically()
-                    margin = dip(8)
                 }
             }
         }

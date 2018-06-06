@@ -21,10 +21,9 @@ class Check (
                 checkBox {
                     text = this@Check.text.get(context)
                     isChecked = data?.value ?: true
-                    onCheckedChange { buttonView, isChecked -> data?.value = isChecked }
+                    onCheckedChange { _, isChecked -> data?.value = isChecked }
                 }.lparams(width = wrapContent) {
                     centerVertically()
-                    margin = dip(8)
                 }
             }
         }

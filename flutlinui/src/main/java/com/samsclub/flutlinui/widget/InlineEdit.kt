@@ -26,7 +26,6 @@ class InlineEdit(
                     hint = this@InlineEdit.hint?.get(context) ?: ""
                 }.lparams(width = matchParent) {
                     centerVertically()
-                    margin = dip(8)
                 }
                 et.maxLines = 1
                 et.inputType = this@InlineEdit.inputType
