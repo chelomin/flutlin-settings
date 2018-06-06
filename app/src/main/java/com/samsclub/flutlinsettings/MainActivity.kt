@@ -49,22 +49,19 @@ class MainActivity : AppCompatActivity() {
                                 text = viewModel.editableText2,
                                 hint = Text.from("Hint2")
                         ),
-//                        Box(
-//                                child =
-                                Card(
-                                        view = SettingsView(
-                                                listOf(
-                                                        Label(text = Text.from("Some label")),
-                                                        InlineEdit(
-                                                                text = viewModel.editableText2,
-                                                                hint = Text.from("Some other hint")
-                                                        )
+                        Card(
+                                view = SettingsView(
+                                        listOf(
+                                                Label(text = Text.from("Some label")),
+                                                InlineEdit(
+                                                        text = viewModel.editableText2,
+                                                        hint = Text.from("Some other hint")
                                                 )
-                                        ),
-                                        boxParams = cardMargins
-                                )
-//                                boxParams = cardMargins
-//                        )
+                                        )
+                                ),
+                                margin = cardMargins.margin,
+                                padding = cardMargins.padding
+                        )
                 )
         ).inflate(InitParams(
                 applicationContext,

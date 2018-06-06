@@ -7,13 +7,15 @@ import android.widget.FrameLayout
 import com.samsclub.flutlinui.SettingsView
 import com.samsclub.flutlinui.base.InitParams
 import com.samsclub.flutlinui.base.SettingsItem
+import com.samsclub.flutlinui.style.LTRB
 
 /**
  * Created by y0c021m on 5/29/18.
  */
 class Card (
         val view: SettingsView,
-        private val boxParams: BoxParams? = null,
+        private val margin: LTRB? = null,
+        private val padding: LTRB? = null,
         visibility: MutableLiveData<Boolean>? = null
 ) : SettingsItem(visibility) {
     override fun build(): View {
@@ -24,9 +26,11 @@ class Card (
         frameLayout.addView(view.inflate(InitParams(context, inflater, lifecycleOwner)))
         cardView.addView(frameLayout)
 
+        applyPadding(frameLayout, padding)
+        applyMargin(cardView, margin)
+
         root = cardView
 
-        applyBoxParams(frameLayout, boxParams)
         onBuilt()
 
         return root

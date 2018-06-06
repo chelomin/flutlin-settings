@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import com.samsclub.flutlinui.SettingsView
 import com.samsclub.flutlinui.base.InitParams
 import com.samsclub.flutlinui.base.SettingsItem
+import com.samsclub.flutlinui.style.LTRB
 
 /**
  * Created by y0c021m on 5/29/18.
@@ -30,9 +29,9 @@ class Box(
             val lp = lpVg as RelativeLayout.LayoutParams
 
             with(boxParams) {
-                lp.setMargins(marginStart, marginTop, marginEnd, marginBottom)
+                lp.setMargins(margin.left, margin.top, margin.right, margin.bottom)
                 box.layoutParams = lp
-                box.setPadding(paddingStart, paddingTop, paddingEnd, paddingBottom)
+                box.setPadding(padding.left, padding.top, padding.right, padding.bottom)
             }
         }
 
@@ -45,12 +44,6 @@ class Box(
 }
 
 data class BoxParams(
-        val marginStart: Int = 0,
-        val marginEnd: Int = 0,
-        val marginTop: Int = 0,
-        val marginBottom: Int = 0,
-        val paddingStart: Int = 0,
-        val paddingEnd: Int = 0,
-        val paddingTop: Int = 0,
-        val paddingBottom: Int = 0
+        val margin: LTRB,
+        val padding: LTRB
 )

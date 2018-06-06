@@ -11,6 +11,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import com.samsclub.flutlinui.style.LTRB
 import com.samsclub.flutlinui.widget.BoxParams
 
 /**
@@ -46,9 +47,30 @@ abstract class SettingsItem(
             val mlp = lp as ViewGroup.MarginLayoutParams
 
             with(boxParams) {
-                mlp.setMargins(marginStart, marginTop, marginEnd, marginBottom)
+                mlp.setMargins(margin.left, margin.top, margin.right, margin.bottom)
                 vg.layoutParams = mlp
-                vg.setPadding(paddingStart, paddingTop, paddingEnd, paddingBottom)
+                vg.setPadding(padding.left, padding.top, padding.right, padding.bottom)
+            }
+        }
+    }
+
+    fun applyMargin(vg: ViewGroup, margin: LTRB?) {
+        if (margin != null) {
+            val lp: ViewGroup.LayoutParams = vg.layoutParams
+                    ?: ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            val mlp = lp as ViewGroup.MarginLayoutParams
+
+            with(margin) {
+                mlp.setMargins(left, top, right, bottom)
+                vg.layoutParams = mlp
+            }
+        }
+    }
+
+    fun applyPadding (view: View, padding: LTRB?) {
+        if (padding != null) {
+            with(padding) {
+                view.setPadding(left, top, right, bottom)
             }
         }
     }
