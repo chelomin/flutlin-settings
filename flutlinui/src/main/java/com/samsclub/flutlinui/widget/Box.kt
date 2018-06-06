@@ -1,6 +1,7 @@
 package com.samsclub.flutlinui.widget
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Observer
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -16,10 +17,12 @@ import com.samsclub.flutlinui.style.LTRB
 class Box(
         private val child: SettingsItem,
         private val boxParams: BoxParams? = null,
+        private val bgColor: MutableLiveData<Int>? = null,
         visibility: MutableLiveData<Boolean>? = null
 ) : SettingsItem(visibility) {
     override fun build(): View {
         val box = RelativeLayout(context)
+        val bgColorObserver = Observer<Int> { color -> box.setBackgroundColor(color!!)}
 
         child.init(InitParams(context,inflater, lifecycleOwner))
         box.addView(child.build())
@@ -34,6 +37,8 @@ class Box(
                 box.setPadding(padding.left, padding.top, padding.right, padding.bottom)
             }
         }
+
+        bgColor?.observe(lifecycleOwner, bgColorObserver)
 
         root = box
 

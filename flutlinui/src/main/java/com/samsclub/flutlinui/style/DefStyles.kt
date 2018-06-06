@@ -8,6 +8,8 @@ import com.samsclub.flutlinui.widget.BoxParams
  */
 
 object DefStyles {
+    const val defTextSize = 10
+    
     val defMargin = LTRB(dp(4))
     val defPadding = LTRB(dp(4))
 

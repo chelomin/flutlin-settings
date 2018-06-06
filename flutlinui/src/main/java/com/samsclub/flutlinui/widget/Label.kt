@@ -6,6 +6,9 @@ import android.view.View
 import com.samsclub.flutlinui.base.SettingsItem
 import com.samsclub.flutlinui.base.Text
 import com.samsclub.flutlinui.base.TextFromLiveDataString
+import com.samsclub.flutlinui.base.dp
+import com.samsclub.flutlinui.style.DefStyles
+import com.samsclub.flutlinui.style.LTRB
 import org.jetbrains.anko.*
 
 /**
@@ -13,7 +16,11 @@ import org.jetbrains.anko.*
  */
 class Label(
         val text: Text,
-        var visibility: MutableLiveData<Boolean>? = null
+        private val textColor: MutableLiveData<Int>? = null,
+        private val textSize: MutableLiveData<Int>? = null,
+        private val padding: LTRB? = null,
+        private val allCaps: Boolean = false,
+        val visibility: MutableLiveData<Boolean>? = null
 ) : SettingsItem(visibility) {
     override fun build(): View {
         val t = this@Label.text
@@ -25,11 +32,21 @@ class Label(
                         val textObserver = Observer<String> {it -> text = it}
                         t.ldStr.observe(lifecycleOwner, textObserver)
                     }
+
+                    val textColorObserver = Observer<Int> { color -> setTextColor(color!!) }
+                    val textSizeObserver = Observer<Int> { size -> textSize = (size ?: DefStyles.defTextSize).toFloat() }
+
+                    this@Label.textColor?.observe(lifecycleOwner, textColorObserver)
+                    this@Label.textSize?.observe(lifecycleOwner, textSizeObserver)
+
+                    allCaps = this@Label.allCaps
                 }.lparams(width = wrapContent) {
                     centerVertically()
                 }
             }
         }
+
+        applyPadding(root, padding)
 
         onBuilt()
 

@@ -24,8 +24,8 @@ abstract class SettingsItem(
     lateinit var lifecycleOwner: LifecycleOwner
     lateinit var root: View
 
-    private val visibilityObserver = Observer<Boolean> {
-        visible -> root.visibility = if (visible != null && visible) VISIBLE else GONE
+    private val visibilityObserver = Observer<Boolean> { visible ->
+        root.visibility = if (visible != null && visible) VISIBLE else GONE
     }
 
     abstract fun build(): View
@@ -67,7 +67,7 @@ abstract class SettingsItem(
         }
     }
 
-    fun applyPadding (view: View, padding: LTRB?) {
+    fun applyPadding(view: View, padding: LTRB?) {
         if (padding != null) {
             with(padding) {
                 view.setPadding(left, top, right, bottom)
@@ -87,4 +87,14 @@ fun dp(dp: Int): Int {
     val retVal = (dp * density).toInt()
     Log.d("yury", "dp($dp) -> $retVal")
     return retVal
+}
+
+/**
+ * Creates MutableLiveData from value
+ */
+fun <T> mld(value: T): MutableLiveData<T> {
+    val liveData = MutableLiveData<T>()
+    liveData.value = value
+
+    return liveData
 }
