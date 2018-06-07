@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(SettingsVm::class.java)
         viewModel.editableText.value = "Snap!"
-        viewModel.editableText2.value = ""
+        viewModel.editableText2.value = "Continuous update text"
 
         val container = findViewById<FrameLayout>(R.id.root)
         val cardMargins = Style.cardMargins
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                         ),
                         Box(
                                 child = Label(
-                                        text = Text.from("Snap again!"),
+                                        text = Text.from(viewModel.editableText2),
                                         textColor = mld(Color.RED),
                                         visibility = viewModel.toggleData
                                 ),
@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity() {
                         ),
                         InlineEdit(
                                 text = viewModel.editableText2,
-                                hint = Text.from("Hint2")
+                                hint = Text.from("Hint2"),
+                                continuousUpdate = true
                         ),
                         Card(
                                 view = SettingsView(
@@ -73,7 +74,8 @@ class MainActivity : AppCompatActivity() {
                                                 ),
                                                 InlineEdit(
                                                         text = viewModel.editableText2,
-                                                        hint = Text.from("Some other hint")
+                                                        hint = Text.from("Some other hint"),
+                                                        continuousUpdate = true
                                                 )
                                         )
                                 ),
