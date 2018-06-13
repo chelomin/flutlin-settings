@@ -34,59 +34,72 @@ class MainActivity : AppCompatActivity() {
         val container = findViewById<FrameLayout>(R.id.root)
         val cardMargins = Style.cardMargins
 
-        Log.d("yury", "cardMargins = ${cardMargins}")
         val settingsView = SettingsView(
-                listOf(
-                        Label(
-                                text = Text.from(viewModel.editableText),
-                                padding = DefStyles.defPadding
-                        ),
-                        Box(
-                                child = Label(
-                                        text = Text.from(viewModel.editableText2),
-                                        textColor = mld(Color.RED),
-                                        visibility = viewModel.toggleData
-                                ),
-                                bgColor = mld(Color.YELLOW),
-                                boxParams = BoxParams(margin = LTRB(0), padding = LTRB(dp(4)))
-                        ),
-                        Check(
-                                text = Text.from("Snap toggle"),
-                                data = viewModel.toggleData
-                        ),
-                        InlineEdit(
-                                text = viewModel.editableText,
-                                hint = Text.from("Hint1")
-                        ),
-                        InlineEdit(
+            listOf(
+                Label(
+                    text = Text.from(viewModel.editableText),
+                    padding = DefStyles.defPadding
+                ),
+                Box(
+                    child = Label(
+                        text = Text.from(viewModel.editableText2),
+                        textColor = mld(Color.RED)
+                    ),
+                    bgColor = mld(Color.YELLOW),
+                    visibility = viewModel.toggleData,
+                    boxParams = BoxParams(margin = LTRB(0), padding = LTRB(dp(4)))
+                ),
+                Check(
+                    text = Text.from("Snap toggle"),
+                    data = viewModel.toggleData
+                ),
+                InlineEdit(
+                    text = viewModel.editableText,
+                    hint = Text.from("Hint1")
+                ),
+                InlineEdit(
+                    text = viewModel.editableText2,
+                    hint = Text.from("Hint2"),
+                    continuousUpdate = true
+                ),
+                Card(
+                    view = SettingsView(
+                        listOf(
+                            Label(
+                                text = Text.from("Some label"),
+                                allCaps = true,
+                                padding = LTRB(dp(8)),
+                                textColor = mld(Color.BLUE),
+                                textSize = mld(14)
+                            ),
+                            InlineEdit(
                                 text = viewModel.editableText2,
-                                hint = Text.from("Hint2"),
+                                hint = Text.from("Some other hint"),
                                 continuousUpdate = true
-                        ),
-                        Card(
-                                view = SettingsView(
-                                        listOf(
-                                                Label(
-                                                        text = Text.from("Some label"),
-                                                        allCaps = true,
-                                                        textColor = mld(Color.BLUE),
-                                                        textSize = mld(8)
-                                                ),
-                                                InlineEdit(
-                                                        text = viewModel.editableText2,
-                                                        hint = Text.from("Some other hint"),
-                                                        continuousUpdate = true
-                                                )
-                                        )
-                                ),
-                                margin = cardMargins.margin,
-                                padding = cardMargins.padding
+                            ),
+                            AlertEdit(
+                                text = mld("Initial value"),
+                                textColor = mld(Color.MAGENTA),
+                                textSize = mld(16),
+                                positiveText = Text.from("Save"),
+                                negativeText = Text.from("Discard"),
+                                titleText = Text.from("What are you up for?"),
+                                padding = LTRB(dp(8)),
+                                dialogPadding = LTRB(dp(8)),
+                                editButtonText = Text.from(mld("Change")),
+                                editButtonColor = mld(Color.BLUE),
+                                validator = { it -> if (it.length < 8) "Please enter at least 8 characters" else null }
+                            )
                         )
+                    ),
+                    margin = cardMargins.margin,
+                    padding = cardMargins.padding
                 )
+            )
         ).inflate(InitParams(
-                applicationContext,
-                LayoutInflater.from(applicationContext),
-                this as LifecycleOwner))
+            this,
+            LayoutInflater.from(this),
+            this as LifecycleOwner))
 
         container.addView(settingsView)
     }
