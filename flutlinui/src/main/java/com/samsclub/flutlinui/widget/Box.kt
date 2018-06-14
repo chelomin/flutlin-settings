@@ -21,10 +21,10 @@ class Box(
         visibility: MutableLiveData<Boolean>? = null
 ) : SettingsItem(visibility) {
     override fun build(): View {
-        val box = RelativeLayout(context)
+        val box = RelativeLayout(ip.context)
         val bgColorObserver = Observer<Int> { color -> box.setBackgroundColor(color!!)}
 
-        child.init(InitParams(context,inflater, lifecycleOwner))
+        child.init(ip)
         box.addView(child.build())
 
         if (boxParams != null) {
@@ -38,7 +38,7 @@ class Box(
             }
         }
 
-        bgColor?.observe(lifecycleOwner, bgColorObserver)
+        bgColor?.observe(ip.lifecycleOwner, bgColorObserver)
 
         root = box
 

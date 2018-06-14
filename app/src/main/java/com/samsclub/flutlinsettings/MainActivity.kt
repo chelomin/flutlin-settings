@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         val container = findViewById<FrameLayout>(R.id.root)
         val cardMargins = Style.cardMargins
 
-        val settingsView = SettingsView(
+        SettingsView(
             listOf(
                 Label(
                     text = Text.from(viewModel.editableText),
@@ -91,9 +91,19 @@ class MainActivity : AppCompatActivity() {
                                 validator = { it -> if (it.length < 8) "Please enter at least 8 characters" else null }
                             ),
                             Divider(
-                                color = mld(Color.YELLOW),
+                                color = mld(Color.DKGRAY),
                                 padding = LTRB(dp(8)),
                                 height = dp(2)
+                            ),
+                            Page(
+                                widget = Label(
+                                    text = Text.from("Next page of settings"),
+                                    allCaps = true,
+                                    padding = LTRB(dp(8)),
+                                    textColor = mld(Color.BLUE),
+                                    textSize = mld(14)
+                                ),
+                                page = buildSecondPage()
                             )
                         )
                     ),
@@ -101,11 +111,74 @@ class MainActivity : AppCompatActivity() {
                     padding = cardMargins.padding
                 )
             )
-        ).inflate(InitParams(
-            this,
-            LayoutInflater.from(this),
-            this as LifecycleOwner))
+        ).run(
+            InitParams(
+                this,
+                LayoutInflater.from(this),
+                this as LifecycleOwner,
+                container)
+        )
+    }
 
-        container.addView(settingsView)
+    private fun buildSecondPage(): SettingsView {
+        return SettingsView (
+            children = listOf (
+                Label(
+                    text = Text.from("Page 2"),
+                    allCaps = true,
+                    padding = LTRB(dp(8)),
+                    textColor = mld(Color.BLUE),
+                    textSize = mld(14)
+                ),
+                Card(
+                    view = SettingsView(
+                        listOf(
+                            Label(
+                                text = Text.from("Card"),
+                                allCaps = true,
+                                padding = LTRB(dp(8)),
+                                textColor = mld(Color.BLUE),
+                                textSize = mld(14)
+                            ),
+                            InlineEdit(
+                                text = viewModel.editableText2,
+                                hint = Text.from("Enter your name"),
+                                continuousUpdate = true
+                            ),
+                            AlertEdit(
+                                text = mld("zuck@fb.com"),
+                                textColor = mld(Color.BLUE),
+                                textSize = mld(16),
+                                positiveText = Text.from("Save"),
+                                negativeText = Text.from("Discard"),
+                                titleText = Text.from("What's your email address?"),
+                                padding = LTRB(dp(8)),
+                                dialogPadding = LTRB(dp(8)),
+                                editButtonText = Text.from(mld("Change")),
+                                editButtonColor = mld(Color.BLUE),
+                                validator = { it -> if (it.length < 8) "Please enter at least 8 characters" else null }
+                            ),
+                            Divider(
+                                color = mld(Color.YELLOW),
+                                padding = LTRB(dp(8)),
+                                height = dp(2)
+                            )
+//                            Page(
+//                                widget = Label(
+//                                    text = Text.from("Next page of settings"),
+//                                    allCaps = true,
+//                                    padding = LTRB(dp(8)),
+//                                    textColor = mld(Color.BLUE),
+//                                    textSize = mld(14)
+//                                ),
+//                                page = buildSecondPage()
+//                            )
+                        )
+                    ),
+                    margin = Style.cardMargins.margin,
+                    padding = Style.cardMargins.padding
+                )
+            )
+        )
     }
 }

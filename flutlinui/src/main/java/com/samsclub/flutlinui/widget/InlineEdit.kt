@@ -26,7 +26,7 @@ class InlineEdit(
         visibility: MutableLiveData<Boolean>? = null
 ) : SettingsItem(visibility) {
     override fun build(): View {
-        root = with(context) {
+        root = with(ip.context) {
             relativeLayout {
                 val et = editText {
                     hint = this@InlineEdit.hint?.get(context) ?: ""

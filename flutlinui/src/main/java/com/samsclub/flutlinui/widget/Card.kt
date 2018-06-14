@@ -19,11 +19,11 @@ class Card (
         visibility: MutableLiveData<Boolean>? = null
 ) : SettingsItem(visibility) {
     override fun build(): View {
-        val cardView = CardView(context)
+        val cardView = CardView(ip.context)
 
-        val frameLayout = FrameLayout(context)
+        val frameLayout = FrameLayout(ip.context)
 
-        frameLayout.addView(view.inflate(InitParams(context, inflater, lifecycleOwner)))
+        frameLayout.addView(view.inflate(ip))
         cardView.addView(frameLayout)
 
         applyPadding(frameLayout, padding)

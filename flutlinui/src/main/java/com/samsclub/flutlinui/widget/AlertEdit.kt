@@ -43,19 +43,19 @@ class AlertEdit(
 ) : SettingsItem(visibility) {
     override fun build(): View {
         val t = this@AlertEdit.text
-        root = with(context) {
+        root = with(ip.context) {
             relativeLayout() {
                 textView {
                     text = t.value
-                    t.observe(lifecycleOwner, Observer<String> { it -> text = it })
+                    t.observe(ip.lifecycleOwner, Observer<String> { it -> text = it })
 
                     val textColorObserver = Observer<Int> { color -> setTextColor(color!!) }
                     val textSizeObserver = Observer<Int> { size ->
                         textSize = (size ?: DefStyles.defTextSize).toFloat()
                     }
 
-                    this@AlertEdit.textColor?.observe(lifecycleOwner, textColorObserver)
-                    this@AlertEdit.textSize?.observe(lifecycleOwner, textSizeObserver)
+                    this@AlertEdit.textColor?.observe(ip.lifecycleOwner, textColorObserver)
+                    this@AlertEdit.textSize?.observe(ip.lifecycleOwner, textSizeObserver)
 
                     allCaps = this@AlertEdit.allCaps
                 }.lparams(width = wrapContent) {
@@ -66,9 +66,9 @@ class AlertEdit(
                     textView {
                         text = editButtonText.get(context)
                         if (editButtonText is TextFromLiveDataString) {
-                            editButtonText.ldStr.observe(lifecycleOwner, Observer<String> { it -> text = it })
+                            editButtonText.ldStr.observe(ip.lifecycleOwner, Observer<String> { it -> text = it })
                         }
-                        editButtonColor?.observe(lifecycleOwner, Observer<Int> { it ->
+                        editButtonColor?.observe(ip.lifecycleOwner, Observer<Int> { it ->
                             if (it != null) {
                                 textColor = it
                             }
@@ -90,12 +90,12 @@ class AlertEdit(
     }
 
     private fun showDialog() {
-        val dlgRoot = inflater.inflate(R.layout.dialog_alert_edit, null)
+        val dlgRoot = ip.inflater.inflate(R.layout.dialog_alert_edit, null)
         val title = dlgRoot.findViewById<TextView>(R.id.title)
         val editText = dlgRoot.findViewById<AppCompatEditText>(R.id.edit_text)
         val errorText = dlgRoot.findViewById<TextView>(R.id.error_text)
 
-        title.text = titleText?.get(context) ?: "Please enter new value"
+        title.text = titleText?.get(ip.context) ?: "Please enter new value"
         editText.setText(text.value)
 
         if (dialogPadding != null) {
@@ -104,10 +104,10 @@ class AlertEdit(
             }
         }
 
-        val positive = positiveText?.get(context) ?: "Ok"
-        val negative = negativeText?.get(context) ?: "Cancel"
+        val positive = positiveText?.get(ip.context) ?: "Ok"
+        val negative = negativeText?.get(ip.context) ?: "Cancel"
 
-        val dialog = AlertDialog.Builder(context)
+        val dialog = AlertDialog.Builder(ip.context)
                 .setView(dlgRoot)
                 .setPositiveButton(positive, null)
                 .setNegativeButton(negative, null)

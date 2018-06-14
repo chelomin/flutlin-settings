@@ -24,20 +24,20 @@ class Label(
 ) : SettingsItem(visibility) {
     override fun build(): View {
         val t = this@Label.text
-        root = with(context) {
+        root = with(ip.context) {
             relativeLayout {
                 textView {
                     text = t.get(context)
                     if (t is TextFromLiveDataString) {
                         val textObserver = Observer<String> {it -> text = it}
-                        t.ldStr.observe(lifecycleOwner, textObserver)
+                        t.ldStr.observe(ip.lifecycleOwner, textObserver)
                     }
 
                     val textColorObserver = Observer<Int> { color -> setTextColor(color!!) }
                     val textSizeObserver = Observer<Int> { size -> textSize = (size ?: DefStyles.defTextSize).toFloat() }
 
-                    this@Label.textColor?.observe(lifecycleOwner, textColorObserver)
-                    this@Label.textSize?.observe(lifecycleOwner, textSizeObserver)
+                    this@Label.textColor?.observe(ip.lifecycleOwner, textColorObserver)
+                    this@Label.textSize?.observe(ip.lifecycleOwner, textSizeObserver)
 
                     allCaps = this@Label.allCaps
                 }.lparams(width = wrapContent) {

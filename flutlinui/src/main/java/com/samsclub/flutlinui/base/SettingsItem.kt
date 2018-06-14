@@ -11,6 +11,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.samsclub.flutlinui.style.LTRB
 import com.samsclub.flutlinui.widget.BoxParams
 
@@ -18,11 +19,9 @@ import com.samsclub.flutlinui.widget.BoxParams
  * Created by y0c021m on 5/23/18.
  */
 abstract class SettingsItem(
-        private val visibility: MutableLiveData<Boolean>? = null) {
-    lateinit var context: Context
-    lateinit var inflater: LayoutInflater
-    lateinit var lifecycleOwner: LifecycleOwner
+    private val visibility: MutableLiveData<Boolean>? = null) {
     lateinit var root: View
+    lateinit var ip: InitParams
 
     private val visibilityObserver = Observer<Boolean> { visible ->
         root.visibility = if (visible != null && visible) VISIBLE else GONE
@@ -31,19 +30,17 @@ abstract class SettingsItem(
     abstract fun build(): View
 
     fun init(params: InitParams) {
-        context = params.context
-        inflater = params.inflater
-        lifecycleOwner = params.lifecycleOwner
+        ip = params
     }
 
     fun onBuilt() {
-        visibility?.observe(lifecycleOwner, visibilityObserver)
+        visibility?.observe(ip.lifecycleOwner, visibilityObserver)
     }
 
     fun applyBoxParams(vg: ViewGroup, boxParams: BoxParams?) {
         if (boxParams != null) {
             val lp: ViewGroup.LayoutParams = vg.layoutParams
-                    ?: ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                ?: ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             val mlp = lp as ViewGroup.MarginLayoutParams
 
             with(boxParams) {
@@ -57,7 +54,7 @@ abstract class SettingsItem(
     fun applyMargin(vg: ViewGroup, margin: LTRB?, height: Int? = null) {
         if (margin != null) {
             val lp: ViewGroup.LayoutParams = vg.layoutParams
-                    ?: ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                ?: ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             val mlp = lp as ViewGroup.MarginLayoutParams
 
             with(margin) {
@@ -79,7 +76,11 @@ abstract class SettingsItem(
     }
 }
 
-data class InitParams(val context: Context, val inflater: LayoutInflater, val lifecycleOwner: LifecycleOwner)
+data class InitParams(
+    val context: Context,
+    val inflater: LayoutInflater,
+    val lifecycleOwner: LifecycleOwner,
+    val rootContainer: FrameLayout)
 
 
 val density by lazy {

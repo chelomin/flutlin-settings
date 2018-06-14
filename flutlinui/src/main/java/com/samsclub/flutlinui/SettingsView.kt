@@ -27,4 +27,9 @@ class SettingsView (
 
         return container
     }
+
+    fun run(params: InitParams) {
+        params.rootContainer.removeAllViews()
+        params.rootContainer.addView(inflate(params))
+    }
 }

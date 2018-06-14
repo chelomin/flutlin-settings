@@ -16,7 +16,7 @@ class Check (
         val data: MutableLiveData<Boolean>? = null
 ) : SettingsItem(visibility) {
     override fun build(): View {
-        root = with(context) {
+        root = with(ip.context) {
             relativeLayout {
                 checkBox {
                     text = this@Check.text.get(context)

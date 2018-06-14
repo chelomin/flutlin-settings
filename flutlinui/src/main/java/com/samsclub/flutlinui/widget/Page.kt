@@ -4,6 +4,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.view.View
 import android.widget.FrameLayout
+import com.samsclub.flutlinui.SettingsView
+import com.samsclub.flutlinui.base.InitParams
 import com.samsclub.flutlinui.base.SettingsItem
 import com.samsclub.flutlinui.style.LTRB
 
@@ -11,22 +13,17 @@ import com.samsclub.flutlinui.style.LTRB
 /**
  * Created by y0c021m on 5/23/18.
  */
-class Divider(
-    private val color: MutableLiveData<Int>,
-    private val padding: LTRB? = null,
-    private val height: Int,
+class Page(
+    private val widget: SettingsItem,
+    private val page: SettingsView,
     val visibility: MutableLiveData<Boolean>? = null
 ) : SettingsItem(visibility) {
     override fun build(): View {
 
-        val fl = FrameLayout(ip.context)
+        widget.init(ip)
+        root = widget.build()
 
-        applyMargin(fl, padding, height)
-
-        root = fl
-        applyPadding(root, padding)
-
-        color.observe(ip.lifecycleOwner, Observer<Int> { it -> if (it != null) root.setBackgroundColor(it) })
+        root.setOnClickListener { page.run(ip) }
 
         onBuilt()
 
