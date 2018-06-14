@@ -89,6 +89,11 @@ class MainActivity : AppCompatActivity() {
                                 editButtonText = Text.from(mld("Change")),
                                 editButtonColor = mld(Color.BLUE),
                                 validator = { it -> if (it.length < 8) "Please enter at least 8 characters" else null }
+                            ),
+                            Divider(
+                                color = mld(Color.YELLOW),
+                                padding = LTRB(dp(8)),
+                                height = dp(2)
                             )
                         )
                     ),

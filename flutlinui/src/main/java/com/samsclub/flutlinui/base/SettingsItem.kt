@@ -54,7 +54,7 @@ abstract class SettingsItem(
         }
     }
 
-    fun applyMargin(vg: ViewGroup, margin: LTRB?) {
+    fun applyMargin(vg: ViewGroup, margin: LTRB?, height: Int? = null) {
         if (margin != null) {
             val lp: ViewGroup.LayoutParams = vg.layoutParams
                     ?: ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -62,6 +62,9 @@ abstract class SettingsItem(
 
             with(margin) {
                 mlp.setMargins(left, top, right, bottom)
+                if (height != null) {
+                    mlp.height = height
+                }
                 vg.layoutParams = mlp
             }
         }
